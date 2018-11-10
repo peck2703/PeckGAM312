@@ -38,13 +38,6 @@ void ACodeCharacter::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void ACodeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
 void ACodeCharacter::Lateral(float value)
 {
 	if (Controller && value)

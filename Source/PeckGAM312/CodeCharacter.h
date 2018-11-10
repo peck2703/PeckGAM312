@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "CodeCharacter.generated.h"
-#include "GameFramework\CharacterMovementComponent.h"
 
 UCLASS()
 class PECKGAM312_API ACodeCharacter : public ACharacter
 {
-
+	GENERATED_BODY()
 public:
 	// Sets default values for this character's properties
 	ACodeCharacter();
@@ -29,11 +29,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)override;
 	void Lateral(float value);
 	void SidetoSide(float value);
 	void SetupPlayerInputComponent(class UInputComponent* InputComponent);
-
-	
-	
 };
