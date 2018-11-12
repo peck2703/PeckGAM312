@@ -5,9 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PeckCameraController.generated.h"
-/**
- * 
- */
+
+
 UCLASS()
 class PECKGAM312_API APeckCameraController : public AActor
 {
@@ -21,6 +20,7 @@ class PECKGAM312_API APeckCameraController : public AActor
 
 	UPROPERTY(EditAnywhere, Category = Cameras)
 	AActor* FixedCamera;
+
 public:
 	APeckCameraController();
 protected:
@@ -31,8 +31,8 @@ public:
 	void SetupPlayerInputComponent(class UInputComponent* InputComponent);
 	APlayerController* OurPlayerController;
 
-	void SetCameraOne(float value);
-	void SetCameraTwo(float value);
-	void SetFixedCamera(float value);
+	void SetCameraOne();
+	void SetCameraTwo();
+	void SetFixedCamera();
 
 };
