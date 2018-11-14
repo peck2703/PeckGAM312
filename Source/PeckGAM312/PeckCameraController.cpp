@@ -33,12 +33,7 @@ void APeckCameraController::SetCameraOne()
 {
 	if (OurPlayerController)	//if Controller is attached
 	{
-		//Checks if the view target is not the camera we want to set it to and then set it
-		if (OurPlayerController->GetViewTarget != CameraOne)
-		{
-			//Set the current target to that of the CameraOne
-			OurPlayerController->SetViewTarget(CameraOne);
-		}
+		
 	}
 }
 
@@ -46,12 +41,7 @@ void APeckCameraController::SetCameraTwo()
 {
 	if (OurPlayerController)	//if Controller is attached
 	{
-		//Checks if the view target is not the camera we want to set it to and then set it
-		if (OurPlayerController->GetViewTarget != CameraTwo)
-		{
-			//Set the current target to that of the CameraOne
-			OurPlayerController->SetViewTarget(CameraTwo);
-		}
+		
 	}
 }
 
@@ -59,11 +49,6 @@ void APeckCameraController::SetFixedCamera()
 {
 	if (OurPlayerController)	//if Controller is attached
 	{
-		//Checks if the view target is not the camera we want to set it to and then set it
-		if (OurPlayerController->GetViewTarget != FixedCamera)
-		{
-			//Set the current target to that of the CameraOne
-			OurPlayerController->SetViewTarget(FixedCamera);
-		}
+		
 	}
 }
