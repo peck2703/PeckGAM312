@@ -21,7 +21,7 @@ ACodeCharacter::ACodeCharacter()
 
 ACodeCharacter::ACodeCharacter(const FObjectInitializer & ObjectInitializer)
 {
-	FirstPersonCameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FirstPersonCamera")); 
+	//FirstPersonCameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("FirstPersonCamera")); 
 	
 	springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
