@@ -4,6 +4,10 @@
 #include "Components/SphereComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
+#include "CollidingPawnMovement.h"
 
 // Sets default values
 AComponentPawn::AComponentPawn()
@@ -38,7 +42,34 @@ AComponentPawn::AComponentPawn()
 		SphereMesh->SetWorldScale3D(FVector(0.8f));
 	}
 
+	// Create a particle system that we can activate or deactivate
+	OurParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("MovementParticles"));
+	OurParticleSystem->SetupAttachment(SphereMesh);
+	OurParticleSystem->bAutoActivate = false;
+	OurParticleSystem->SetRelativeLocation(FVector(-20.0f, 0.0f, 20.0f));
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleAsset(TEXT("/Game/StarterContent/Particles/P_Fire.P_Fire"));
+	if (ParticleAsset.Succeeded())
+	{
+		OurParticleSystem->SetTemplate(ParticleAsset.Object);
+	}
+
+	// Use a spring arm to give the camera smooth, natural-feeling motion.
+	USpringArmComponent* SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraAttachmentArm"));
+	SpringArm->SetupAttachment(RootComponent);
+	SpringArm->RelativeRotation = FRotator(-45.f, 0.f, 0.f);
+	SpringArm->TargetArmLength = 400.0f;
+	SpringArm->bEnableCameraLag = true;
+	SpringArm->CameraLagSpeed = 3.0f;
+
+	// Create a camera and attach to our spring arm
+	UCameraComponent* Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("ActualCamera"));
+	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
+	// Create an instance of our movement component, and tell it to update our root component.
+	OurMovementComponent = CreateDefaultSubobject<UCollidingPawnMovement>(TEXT("CustomMovementComponent"));
+	OurMovementComponent->UpdatedComponent = RootComponent;
 }
 
 // Called when the game starts or when spawned
@@ -58,7 +89,27 @@ void AComponentPawn::Tick(float DeltaTime)
 // Called to bind functionality to input
 void AComponentPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+UPawnMovementComponent * AComponentPawn::GetMovementComponent() const
+{
+	return nullptr;
+}
+
+void AComponentPawn::MoveForward(float value)
+{
+}
+
+void AComponentPawn::MoveRight(float value)
+{
+}
+
+void AComponentPawn::Turn(float value)
+{
+}
+
+void AComponentPawn::ParticleToggle()
+{
 }
 

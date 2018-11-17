@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "ComponentPawn.generated.h"
 
 UCLASS()
@@ -26,6 +27,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UParticleSystemComponent* OurParticleSystem;
+	class UCollidingPawnMovement* OurMovementComponent;
+
+	virtual UPawnMovementComponent* GetMovementComponent() const override;
 	
-	
+	void MoveForward(float value);
+	void MoveRight(float value);
+	void Turn(float value);
+	void ParticleToggle();
 };
