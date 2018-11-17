@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ComponentPawn.h"
+#include "Components/InputComponent.h"
 #include "Components/SphereComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
@@ -89,27 +90,46 @@ void AComponentPawn::Tick(float DeltaTime)
 // Called to bind functionality to input
 void AComponentPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+	PlayerInputComponent->BindAction("ParticleToggle", IE_Pressed, this, &AComponentPawn::ParticleToggle);
 
+	PlayerInputComponent->BindAxis("MoveForward", this, &AComponentPawn::MoveForward);
+	PlayerInputComponent->BindAxis("MoveRight", this, &AComponentPawn::MoveRight);
+	PlayerInputComponent->BindAxis("Turn", this, &AComponentPawn::Turn);
 }
 
 UPawnMovementComponent * AComponentPawn::GetMovementComponent() const
 {
-	return nullptr;
+	return OurMovementComponent;
 }
 
-void AComponentPawn::MoveForward(float value)
+void AComponentPawn::MoveForward(float AxisValue)
 {
+	if (OurMovementComponent && (OurMovementComponent->UpdatedComponent == RootComponent))
+	{
+		OurMovementComponent->AddInputVector(GetActorForwardVector() * AxisValue);
+	}
 }
 
-void AComponentPawn::MoveRight(float value)
+void AComponentPawn::MoveRight(float AxisValue)
 {
+	if (OurMovementComponent && (OurMovementComponent->UpdatedComponent == RootComponent))
+	{
+		OurMovementComponent->AddInputVector(GetActorRightVector() * AxisValue);
+	}
 }
 
-void AComponentPawn::Turn(float value)
+void AComponentPawn::Turn(float AxisValue)
 {
+	FRotator NewRotation = GetActorRotation();
+	NewRotation.Yaw += AxisValue;
+	SetActorRotation(NewRotation);
 }
 
 void AComponentPawn::ParticleToggle()
 {
+	if (OurParticleSystem && OurParticleSystem->Template)
+	{
+		OurParticleSystem->ToggleActive();
+	}
 }
 
