@@ -93,7 +93,7 @@ void ACodeCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	FRotator newYaw = GetActorRotation();
-	newYaw.Yaw += mouseInput.X;
+	newYaw.Yaw = mouseInput.X;
 	SetActorRotation(newYaw);
 
 	FRotator newPitch = springArm->GetComponentRotation();
@@ -141,19 +141,19 @@ void ACodeCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompo
 	check(InputComponent);
 
 	//Sets the axis for both lateral and sidetoside
-	InputComponent->BindAxis("Lateral", this, &ACodeCharacter::Lateral);
-	InputComponent->BindAxis("SidetoSide", this, &ACodeCharacter::SidetoSide);
-	InputComponent->BindAxis("MouseYaw", this, &ACodeCharacter::MouseYaw);
-	InputComponent->BindAxis("MousePitch", this, &ACodeCharacter::MousePitch);
-	InputComponent->BindAxis("TurnAtRate", this, &ACodeCharacter::TurnAtRate);
+	InputComponent->BindAxis("MoveForward", this, &ACodeCharacter::Lateral);
+	InputComponent->BindAxis("MoveRight", this, &ACodeCharacter::SidetoSide);
+	InputComponent->BindAxis("Turn", this, &ACodeCharacter::TurnAtRate);
+	InputComponent->BindAxis("LookUp", this, &ACodeCharacter::LookUpRate);
+	InputComponent->BindAxis("TurnRate", this, &ACodeCharacter::TurnAtRate);
 
 
-	//Set up the action mappings to handle the sprint
-	InputComponent->BindAction("Sprint", IE_Pressed, this, &ACodeCharacter::Sprint);
-	InputComponent->BindAction("Sprint", IE_Released, this, &ACodeCharacter::StopSprinting);
-	InputComponent->BindAction("CameraOne", IE_Pressed, this, &ACodeCharacter::ChangeView<1>);
-	InputComponent->BindAction("CameraTwo", IE_Pressed, this, &ACodeCharacter::ChangeView<2>);
-	InputComponent->BindAction("FixedCamera", IE_Pressed, this, &ACodeCharacter::ChangeView<3>);
+	////Set up the action mappings to handle the sprint
+	//InputComponent->BindAction("Sprint", IE_Pressed, this, &ACodeCharacter::Sprint);
+	//InputComponent->BindAction("Sprint", IE_Released, this, &ACodeCharacter::StopSprinting);
+	//InputComponent->BindAction("CameraOne", IE_Pressed, this, &ACodeCharacter::ChangeView<1>);
+	//InputComponent->BindAction("CameraTwo", IE_Pressed, this, &ACodeCharacter::ChangeView<2>);
+	//InputComponent->BindAction("FixedCamera", IE_Pressed, this, &ACodeCharacter::ChangeView<3>);
 }
 
 void ACodeCharacter::MouseYaw(float axis)
