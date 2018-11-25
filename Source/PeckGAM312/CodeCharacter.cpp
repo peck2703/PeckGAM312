@@ -27,7 +27,7 @@ ACodeCharacter::ACodeCharacter(const FObjectInitializer & ObjectInitializer)
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("RootComponent"));
 
-	springArm->AttachTo(ACodeCharacter::GetRootComponent());
+	springArm->AttachToComponent(ACodeCharacter::GetRootComponent(),FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	springArm->TargetArmLength = 150.f;
 	springArm->SetWorldRotation(FRotator(-60.0f, 0.0f, 0.0f));
 
