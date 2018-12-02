@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Engine.h"
 #include "Runtime/Engine/Classes/Engine/TargetPoint.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/SplineComponent.h"
@@ -22,9 +23,15 @@ class PECKGAM312_API AAIPatrolController : public AAIController
 	
 public:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
 private:
-	
+	UPROPERTY()
+		TArray<AActor*> Waypoints;
+
+	FTimerHandle TimerHandle;
+
+	int currentWaypointIndex = 0;
+	int WaypointIndexCount = 0;
 	UFUNCTION()
-		void GetPoints();
+		void GoToNextWaypoint();
 };

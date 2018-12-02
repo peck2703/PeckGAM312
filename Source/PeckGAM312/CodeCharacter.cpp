@@ -109,15 +109,7 @@ void ACodeCharacter::Lateral(float value)
 {
 	if (Controller && value)
 	{
-		//Creating a FRotator variable, by getting the current rotation on the controller
-		const FRotator Rotation = Controller->GetControlRotation();
-		//creating an FRotator based on the Yaw of the previous variable
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		//Creating a unit square (1x1) in order to get direction
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-
-		AddMovementInput(Direction, value);
+		AddMovementInput(GetActorForwardVector(), value);
 	}
 }
 
@@ -125,15 +117,7 @@ void ACodeCharacter::SidetoSide(float value)
 {
 	if (Controller && value)
 	{
-		//Creating a FRotator variable, by getting the current rotation on the controller
-		const FRotator Rotation = Controller->GetControlRotation();
-		//creating an FRotator based on the Yaw of the previous variable
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
-		//Creating a unit square (1x1) in order to get direction
-		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		AddMovementInput(Direction, value);
+		AddMovementInput(GetActorRightVector(), value);
 	}
 }
 void ACodeCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
@@ -141,19 +125,12 @@ void ACodeCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompo
 	check(InputComponent);
 
 	//Sets the axis for both lateral and sidetoside
-	InputComponent->BindAxis("MoveForward", this, &ACodeCharacter::Lateral);
-	InputComponent->BindAxis("MoveRight", this, &ACodeCharacter::SidetoSide);
+	InputComponent->BindAxis("Lateral", this, &ACodeCharacter::Lateral);
+	InputComponent->BindAxis("SideToSide", this, &ACodeCharacter::SidetoSide);
 	InputComponent->BindAxis("Turn", this, &ACodeCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUp", this, &ACodeCharacter::LookUpRate);
 	InputComponent->BindAxis("TurnRate", this, &ACodeCharacter::TurnAtRate);
 
-
-	////Set up the action mappings to handle the sprint
-	//InputComponent->BindAction("Sprint", IE_Pressed, this, &ACodeCharacter::Sprint);
-	//InputComponent->BindAction("Sprint", IE_Released, this, &ACodeCharacter::StopSprinting);
-	//InputComponent->BindAction("CameraOne", IE_Pressed, this, &ACodeCharacter::ChangeView<1>);
-	//InputComponent->BindAction("CameraTwo", IE_Pressed, this, &ACodeCharacter::ChangeView<2>);
-	//InputComponent->BindAction("FixedCamera", IE_Pressed, this, &ACodeCharacter::ChangeView<3>);
 }
 
 void ACodeCharacter::MouseYaw(float axis)
