@@ -14,3 +14,11 @@ void AMyPlayerController::BeginPlay()
 
 	bShowMouseCursor = true;
 }
+
+void AMyPlayerController::SetWidget(UUserWidget* myWidget)
+{
+	if (myWidget)
+	{
+		myWidget->AddToViewport();
+	}
+}
