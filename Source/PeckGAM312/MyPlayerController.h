@@ -21,11 +21,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> wUIWidget;
 
+	UFUNCTION(BlueprintPure, Category = "Stamina")
+		float GetInitialStamina();
+	UFUNCTION(BlueprintPure, Category = "Stamina")
+		float GetCurrentStamina();
+	UFUNCTION(BlueprintPure, Category = "Stamina")
+		void UpdateCurrentStamina();
+
 	UUserWidget* myMainMenu;
 
 	UUserWidget* myUIWidget;
 
 	virtual void BeginPlay() override;
-	void SetWidget(UUserWidget* myWidget);
-
+private:
+	UPROPERTY(EditAnywhere, Category = "Stamina")
+		float InitialStamina;
+	UPROPERTY(EditAnywhere, Category = "Stamina")
+		float CurrentStamina;
 };

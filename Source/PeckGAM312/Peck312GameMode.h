@@ -13,7 +13,9 @@ UCLASS()
 class PECKGAM312_API APeck312GameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	UFUNCTION(BlueprintCallable)
+		void AddScore();
 	
 	
 	

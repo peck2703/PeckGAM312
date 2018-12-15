@@ -26,6 +26,8 @@ APickup::APickup()
 	//AddDynamic was not part of Intellisense, but surprisingly it doesn't throw an error
 	PickupBox->OnComponentBeginOverlap.AddDynamic(this, &APickup::OnPlayerEnterPickupBox);
 	PickupBox->AttachToComponent(PickupRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+
+	//myGameMode
 }
 
 // Called when the game starts or when spawned
@@ -42,6 +44,7 @@ void APickup::Tick(float DeltaTime)
 
 void APickup::OnPlayerEnterPickupBox(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+
 	Destroy();
 }
 
