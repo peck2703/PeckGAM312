@@ -2,6 +2,7 @@
 
 #include "Peck312GameMode.h"
 
+void AddScore()
+{
 
-
-
+}
