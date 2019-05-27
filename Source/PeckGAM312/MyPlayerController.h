@@ -25,7 +25,7 @@ public:
 		float GetInitialStamina();
 	UFUNCTION(BlueprintPure, Category = "Stamina")
 		float GetCurrentStamina();
-	UFUNCTION(BlueprintPure, Category = "Stamina")
+	UFUNCTION(Category = "Stamina")
 		void UpdateCurrentStamina();
 
 	UUserWidget* myMainMenu;

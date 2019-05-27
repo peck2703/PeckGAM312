@@ -16,6 +16,18 @@ class PECKGAM312_API ACodeCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		class USkeletalMeshComponent* Mesh1P;
+
+	/** Gun mesh: 1st person view (seen only by self) */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		class USkeletalMeshComponent* FP_Gun;
+
+	/** Location on gun mesh where projectiles should spawn. */
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+		class USceneComponent* FP_MuzzleLocation;
+
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 		UCameraComponent* FirstPersonCameraComponent;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
@@ -31,6 +43,25 @@ class PECKGAM312_API ACodeCharacter : public ACharacter
 	UCameraComponent* camera;
 	UStaticMeshComponent* mesh;
 
+	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+		float BaseTurnRate;
+
+	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
+	UPROPERTY(VisibleAnywhere, Category = Camera)
+		float BaseLookUpRate;
+
+	/** Gun muzzle's offset from the characters location */
+	UPROPERTY(EditAnywhere,Category = Gameplay)
+		FVector GunOffset;
+
+	/** Sound to play each time we fire */
+	UPROPERTY(EditAnywhere, Category = Gameplay)
+		class USoundBase* FireSound;
+
+	/** AnimMontage to play each time we fire */
+	UPROPERTY(EditAnywhere,  Category = Gameplay)
+		class UAnimMontage* FireAnimation;
 	
 public:
 	// Sets default values for this character's properties
@@ -40,25 +71,37 @@ public:
 	APlayerController* OurPlayerController;
 	void Sprint();
 	void StopSprinting();
-	const float BaseTurnRate = 45.0f;
-	const float BaseLookUpRate = 45.0f;
-	const float smoothRate = 0.5f;
-	FVector2D mouseInput;
 
 protected:
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	void TurnAtRate(float value);
-	void LookUpRate(float value);
+	virtual void BeginDestroy() override;
+	virtual void Tick(float DeltaSeconds) override;
 
-	template <int Index>
-	void ChangeView() 
-	{ 
-		SetView(Index); 
-	}
-	void SetView(int CamNumber);
-	bool isThirdPerson = true;
+	/** Fires a projectile. */
+	void OnFire();
+
+	/** Resets HMD orientation and position in VR. */
+	void OnResetVR();
+
+	/** Handles moving forward/backward */
+	void MoveForward(float Val);
+
+	/** Handles stafing movement, left and right */
+	void MoveRight(float Val);
+
+	/**
+	 * Called via input to turn at a given rate.
+	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+	 */
+	void TurnAtRate(float Rate);
+
+	/**
+	 * Called via input to turn look up/down at a given rate.
+	 * @param Rate	This is a normalized rate, i.e. 1.0 means 100% of desired turn rate
+	 */
+	void LookUpAtRate(float Rate);
+
+	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 
 public:	
 	// Called every frame
@@ -75,4 +118,10 @@ public:
 	void SetCameraOne(float blendTime);
 	void SetCameraTwo(float blendTime);
 	void SetCameraFixed(float blendTime);
+
+	/** Returns Mesh1P subobject **/
+	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
+	/** Returns FirstPersonCameraComponent subobject **/
+	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+
 };
