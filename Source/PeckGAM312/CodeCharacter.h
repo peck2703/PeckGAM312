@@ -74,20 +74,10 @@ public:
 
 protected:
 
-	virtual void BeginDestroy() override;
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void BeginPlay() override;
 
 	/** Fires a projectile. */
 	void OnFire();
-
-	/** Resets HMD orientation and position in VR. */
-	void OnResetVR();
-
-	/** Handles moving forward/backward */
-	void MoveForward(float Val);
-
-	/** Handles stafing movement, left and right */
-	void MoveRight(float Val);
 
 	/**
 	 * Called via input to turn at a given rate.
@@ -106,18 +96,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	//Used to change from camera to camera
-	void ToggleCamera();
-
-	// Called to bind functionality to input
-	void Lateral(float value);
-	void SidetoSide(float value);
-	void SetupPlayerInputComponent(class UInputComponent* InputComponent);
-	void MouseYaw(float axis);
-	void MousePitch(float axis);
-	void SetCameraOne(float blendTime);
-	void SetCameraTwo(float blendTime);
-	void SetCameraFixed(float blendTime);
+	
 
 	/** Returns Mesh1P subobject **/
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }

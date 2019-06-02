@@ -69,6 +69,10 @@ void ACodeCharacter::BeginPlay()
 	//OurPlayerController = UGameplayStatics::GetPlayerController(this, 0);
 }
 
+void ACodeCharacter::OnFire()
+{
+}
+
 void ACodeCharacter::TurnAtRate(float value)
 {
 	//Add movement in the X axis
@@ -90,41 +94,17 @@ void ACodeCharacter::StopSprinting()
 {
 	GetCharacterMovement()->MaxWalkSpeed /= sprintSpeedMultiplier;
 }
-
-// Called every frame
-void ACodeCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-void ACodeCharacter::ToggleCamera()
-{
-}
-
-void ACodeCharacter::Lateral(float value)
-{
-	if (Controller && value)
-	{
-		AddMovementInput(GetActorForwardVector(), value);
-	}
-}
-
-void ACodeCharacter::SidetoSide(float value)
-{
-	if (Controller && value)
-	{
-		AddMovementInput(GetActorRightVector(), value);
-	}
-}
 void ACodeCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	check(InputComponent);
 
 	//Sets the axis for both lateral and sidetoside
-	InputComponent->BindAxis("Lateral", this, &ACodeCharacter::Lateral);
-	InputComponent->BindAxis("SideToSide", this, &ACodeCharacter::SidetoSide);
 	InputComponent->BindAxis("Turn", this, &ACodeCharacter::TurnAtRate);
 	InputComponent->BindAxis("LookUp", this, &ACodeCharacter::LookUpAtRate);
 	InputComponent->BindAxis("TurnRate", this, &ACodeCharacter::TurnAtRate);
 
+}
+
+void ACodeCharacter::Tick(float DeltaTime)
+{
 }
